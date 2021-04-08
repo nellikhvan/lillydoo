@@ -1,0 +1,4 @@
+app_addressbook:
+    resource: "@AppBundle/Resources/config/routing/addressbook.yml"
+    prefix:   /addressbook
+

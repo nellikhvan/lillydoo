@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+<div class="container">
+    <h1>Add an address to address book</h1>
+
+    {{ form_start(form) }}
+
+        <div class="form-group">
+            {{ form_row(form.firstName, {'attr': {'class': 'form-control'}}) }}</td>
+        </div>
+
+        <div class="form-group">
+            {{ form_row(form.lastName, {'attr': {'class': 'form-control'}}) }}</td>
+        </div>
+
+        <div class="form-group">
+            {{ form_row(form.streetAndNumber, {'attr': {'class': 'form-control'}}) }}</td>
+        </div>
+
+        <div class="form-group">
+            {{ form_row(form.zip, {'attr': {'class': 'form-control'}}) }}</td>
+        </div>
+
+        <div class="form-group">
+            {{ form_row(form.city, {'attr': {'class': 'form-control'}}) }}</td>
+        </div>
+
+        <div class="form-group">
+            {{ form_row(form.phoneNumber, {'attr': {'class': 'form-control'}}) }}</td>
+        </div>
+
+        <div class="form-group">
+            {{ form_row(form.birthday, {'attr': {'class': 'form-control'}}) }}</td>
+        </div>
+
+        <div class="form-group">
+            {{ form_row(form.email, {'attr': {'class': 'form-control'}}) }}</td>
+        </div>
+
+        <div class="form-group">
+            {{ form_row(form.pictureUrl, {'attr': {'class': 'form-control'}}) }}</td>
+        </div>
+
+    <input type="submit" value="Save" />
+    {{ form_end(form) }}
+
+
+{#            <a href="{{ path('addressbook_index') }}">Back to the list</a>#}
+
+</div>
+{% endblock %}

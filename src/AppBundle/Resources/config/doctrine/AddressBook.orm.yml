@@ -42,4 +42,5 @@ AppBundle\Entity\AddressBook:
             type: string
             length: '255'
             column: picture_url
+            nullable: true
     lifecycleCallbacks: {  }
