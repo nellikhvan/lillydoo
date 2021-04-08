@@ -1,4 +1,4 @@
-Lilliydoo test application
+Lillydoo test application
 ========================
 
 Create an an address book CRUD.
