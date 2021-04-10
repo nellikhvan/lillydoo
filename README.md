@@ -32,5 +32,3 @@ Create an an address book CRUD.
 - /addressbook/edit/{id} - to edit address
 
 - all uploaded pictures you can find in web/uploads/pictures
-
-You can delete address from the list of addresses, edit page or view page.
