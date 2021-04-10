@@ -3,9 +3,12 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\AddressBook;
+use AppBundle\Service\FileUploader;
+use PhpParser\Node\Scalar\MagicConst\File;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
 /**
  * Addressbook controller.
@@ -15,7 +18,7 @@ class AddressBookController extends Controller
 {
     /**
      * Lists all addressBook entities.
-     * @Route("/addressbook/"), methods={"GET"}
+     * @Route("/addressbook/")
      */
     public function indexAction()
     {
@@ -32,18 +35,24 @@ class AddressBookController extends Controller
      * Creates a new addressBook entity.
      * @Route("/addressbook/add")
      */
-    public function addAction(Request $request)
+    public function addAction(Request $request, FileUploader $fileUploader)
     {
         $addressBook = new Addressbook();
         $form = $this->createForm('AppBundle\Form\AddressBookType', $addressBook);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $pictureUrl = $form->get('pictureUrl')->getData();
+            if ($pictureUrl) {
+                $pictureFileName = $fileUploader->upload($pictureUrl);
+                $addressBook->setPictureUrl($pictureFileName);
+            }
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($addressBook);
             $em->flush();
 
-            return $this->redirectToRoute('addressbook_show', array('id' => $addressBook->getId()));
+            return $this->redirectToRoute('app_addressbook_show', array('id' => $addressBook->getId()));
         }
 
         return $this->render('addressbook/add.html.twig', array(
@@ -53,8 +62,7 @@ class AddressBookController extends Controller
     }
 
     /**
-     * Finds and displays a addressBook entity.
-     * @Route("/{id}/show")
+     * @Route("/addressbook/{id}", name="app_addressbook_show")
      */
     public function showAction(AddressBook $addressBook)
     {
@@ -68,18 +76,23 @@ class AddressBookController extends Controller
 
     /**
      * Displays a form to edit an existing addressBook entity.
-     * @Route("/{id}/edit")
+     * @Route("/addressbook/edit/{id}", name="app_addressbook_edit")
      */
-    public function editAction(Request $request, AddressBook $addressBook)
+    public function editAction(Request $request, AddressBook $addressBook, FileUploader $fileUploader)
     {
         $deleteForm = $this->createDeleteForm($addressBook);
         $editForm = $this->createForm('AppBundle\Form\AddressBookType', $addressBook);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
+            $pictureUrl = $editForm->get('pictureUrl')->getData();
+            if ($pictureUrl) {
+                $pictureFileName = $fileUploader->upload($pictureUrl);
+                $addressBook->setPictureUrl($pictureFileName);
+            }
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('addressbook_edit', array('id' => $addressBook->getId()));
+            return $this->redirectToRoute('app_addressbook_edit', array('id' => $addressBook->getId()));
         }
 
         return $this->render('addressbook/edit.html.twig', array(
@@ -91,7 +104,7 @@ class AddressBookController extends Controller
 
     /**
      * Deletes a addressBook entity.
-     * @Route("/{id}/delete")
+     * @Route("/addressbook/delete/{id}", name="app_addressbook_delete")
      */
     public function deleteAction(Request $request, AddressBook $addressBook)
     {
@@ -104,7 +117,7 @@ class AddressBookController extends Controller
             $em->flush();
         }
 
-        return $this->redirectToRoute('addressbook_index');
+        return $this->redirectToRoute('app_addressbook_index');
     }
 
     /**
@@ -117,7 +130,7 @@ class AddressBookController extends Controller
     private function createDeleteForm(AddressBook $addressBook)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('addressbook_delete', array('id' => $addressBook->getId())))
+            ->setAction($this->generateUrl('app_addressbook_delete', array('id' => $addressBook->getId())))
             ->setMethod('DELETE')
             ->getForm()
         ;

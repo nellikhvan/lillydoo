@@ -214,10 +214,8 @@ class AddressBook
 
     /**
      * Set birthday.
-     *
-     * @param \DateTime|null $birthday
-     *
-     * @return AddressBook
+     * @param null $birthday
+     * @return $this
      */
     public function setBirthday($birthday = null)
     {

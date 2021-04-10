@@ -17,3 +17,5 @@
 /web/bundles/
 .env
 .idea
+/tests/lillydoo.db
+/web/uploads/pictures

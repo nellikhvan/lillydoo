@@ -4,6 +4,10 @@
 <div class="container">
     <h1>Address book</h1>
 
+    <div>
+        <a href="/addressbook/add" class="btn btn-primary">Add new address</a>
+    </div><br />
+
     <table class="table">
         <thead>
             <tr>
@@ -23,7 +27,7 @@
         <tbody>
         {% for addressBook in addressBooks %}
             <tr>
-{#                <td><a href="{{ path('addressbook_show', { 'id': addressBook.id }) }}">{{ addressBook.id }}</a></td>#}
+                <td>{{ addressBook.id }}</td>
                 <td>{{ addressBook.firstName }}</td>
                 <td>{{ addressBook.lastName }}</td>
                 <td>{{ addressBook.streetAndNumber }}</td>
@@ -34,24 +38,14 @@
                 <td>{{ addressBook.email }}</td>
                 <td>{{ addressBook.pictureUrl }}</td>
                 <td>
-                    <ul>
-                        <li>
-{#                            <a href="{{ path('addressbook_show', { 'id': addressBook.id }) }}">show</a>#}
-                        </li>
-                        <li>
-{#                            <a href="{{ path('addressbook_edit', { 'id': addressBook.id }) }}">edit</a>#}
-                        </li>
-                    </ul>
+                    <div class="list-group">
+                        <a href="/addressbook/{{ addressBook.id }}" class="btn btn-secondary">Show</a>
+                        <a href="/addressbook/edit/{{ addressBook.id }}" class="btn btn-info">Edit</a>
+                    </div>
                 </td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
-
-    <ul>
-        <li>
-{#            <a href="{{ path('addressbook_new') }}">Create a new addressBook</a>#}
-        </li>
-    </ul>
 </div>
 {% endblock %}

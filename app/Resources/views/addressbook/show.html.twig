@@ -44,23 +44,17 @@
             </tr>
             <tr>
                 <th>Picture url</th>
-                <td>{{ addressBook.pictureUrl }}</td>
+                <td>{% if addressBook.pictureUrl %}<a href="{{ asset('uploads/pictures/' ~ addressBook.pictureUrl) }}" target="_blank">View picture</a>{% endif %}</td>
             </tr>
         </tbody>
     </table>
 
-    <ul>
-        <li>
-{#            <a href="{{ path('addressbook_index') }}">Back to the list</a>#}
-        </li>
-        <li>
-{#            <a href="{{ path('addressbook_edit', { 'id': addressBook.id }) }}">Edit</a>#}
-        </li>
-        <li>
-            {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
-            {{ form_end(delete_form) }}
-        </li>
-    </ul>
+    <div>
+        <a href="/addressbook">Back to the list</a><br>
+        <a href="/addressbook/edit/{{ addressBook.id }}" class="btn btn-info">Edit</a>
+        {{ form_start(delete_form) }}
+            <input type="submit" value="Delete" class="btn btn-danger">
+        {{ form_end(delete_form) }}
+    </div>
 </div>
 {% endblock %}
